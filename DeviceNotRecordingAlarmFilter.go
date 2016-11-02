@@ -26,16 +26,16 @@ func main() {
 
 	scanner := bufio.NewScanner(file)
 
-    // detector for date and time e.g. "28/09/2016 9:00 AM"
+	// detector for date and time e.g. "28/09/2016 9:00 AM"
 	r1, _ := regexp.Compile("[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]*:[0-9]{2} [A|P]M")
 
-    // detector for extension e.g. "34331"
+	// detector for extension e.g. "34331"
 	r2, _ := regexp.Compile("[0-9]{5}")
 
 	// open output file
 	outFileName := strings.Split(inFileName, ".")[0] + "-out.txt"
 	f, err := os.Create(outFileName)
-    logErr(err)
+	logErr(err)
 	defer f.Close()
 
 	for scanner.Scan() {
@@ -44,7 +44,7 @@ func main() {
 		ext := strings.TrimSpace(r2.FindString(line))
 
 		if len(date) > 0 && len(ext) > 0 {
-			// write line to file 
+			// write line to file
 			_, err := f.WriteString(r1.FindString(line) + "\t" + r2.FindString(line) + "\n")
 			logErr(err)
 		}
@@ -58,7 +58,7 @@ func main() {
 }
 
 func logErr(e error) {
-    if e != nil {
+	if e != nil {
 		log.Fatal(e)
 	}
 }
